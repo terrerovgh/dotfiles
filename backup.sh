@@ -63,6 +63,10 @@ done
 
 # Commit y push a GitHub
 cd "$DOTFILES_DIR"
+# Soporte para SSH agent al usar sudo
+if [ -n "$SUDO_USER" ] && [ -n "$SSH_AUTH_SOCK" ]; then
+    export SSH_AUTH_SOCK="$SSH_AUTH_SOCK"
+fi
 git add .
 git commit -m "Backup automático: $(date '+%Y-%m-%d %H:%M:%S')"
 git push origin main
