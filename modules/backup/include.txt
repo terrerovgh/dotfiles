@@ -1,0 +1,4 @@
+# Scripts y configuraciones de backup
+/mnt/usbdata/dotfiles/backup.sh
+/mnt/usbdata/dotfiles/backup.log
+/mnt/usbdata/dotfiles/modules/backup/

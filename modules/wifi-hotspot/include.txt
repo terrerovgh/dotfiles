@@ -1,0 +1,6 @@
+# Configuración de hotspot WiFi
+/etc/hostapd/hostapd.conf
+/etc/default/hostapd
+/etc/dnsmasq.conf
+/etc/network/interfaces
+/etc/iptables/

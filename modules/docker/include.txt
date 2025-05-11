@@ -1,0 +1,8 @@
+# Configuración de Docker
+/etc/docker/daemon.json
+/etc/systemd/system/docker.service.d/
+/mnt/usbdata/config/docker/
+/mnt/usbdata/config/traefik/
+/mnt/usbdata/config/proxy/
+/mnt/usbdata/dev/docker-stacks/
+/mnt/usbdata/dotfiles/modules/docker/

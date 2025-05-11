@@ -1,0 +1,5 @@
+# Configuración de proxy (Squid, Traefik)
+/mnt/usbdata/config/proxy/
+/mnt/usbdata/config/traefik/
+/etc/traefik/
+/etc/squid/

@@ -1,0 +1,3 @@
+# Configuración de montaje USB
+/etc/systemd/system/usb-mount.service
+/mnt/usbdata/config/system/
