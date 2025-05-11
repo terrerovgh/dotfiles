@@ -1,0 +1,20 @@
+# Excluir backups y configuraciones sensibles
+backups/
+/mnt/usbdata/backups/
+*.log
+*.bak
+*.swp
+*.tmp
+*.old
+*.lock
+# Excluir archivos de configuración reales
+/mnt/usbdata/config/
+/mnt/usbdata/dotfiles/backup.log
+/mnt/usbdata/dotfiles/backup-watcher.log
+# Excluir archivos de sistema y temporales
+*~
+# Incluir solo scripts, módulos y documentación
+!/mnt/usbdata/dotfiles/backup.sh
+!/mnt/usbdata/dotfiles/backup-watcher.sh
+!/mnt/usbdata/dotfiles/README.md
+!/mnt/usbdata/dotfiles/modules/
