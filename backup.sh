@@ -37,14 +37,20 @@ backup_module() {
         local backed_up_any=0
         while IFS= read -r file; do
             [[ -z "$file" || "$file" =~ ^# ]] && continue
-            # Permitir rutas absolutas y relativas
             local src_path="$file"
-            [[ ! "$file" =~ ^/ ]] && src_path="$DOTFILES_DIR/$file"
+            local dest
+            if [[ "$file" =~ ^/ ]]; then
+                # Ruta absoluta: respáldala como system/etc/hostname, etc.
+                dest="$module_backup_dir${file}"
+            else
+                # Ruta relativa: respáldala como backup/README.md, etc.
+                dest="$module_backup_dir/$file"
+                src_path="$DOTFILES_DIR/$file"
+            fi
+            local dest_dir
+            dest_dir=$(dirname "$dest")
+            mkdir -p "$dest_dir"
             if [[ -e "$src_path" ]]; then
-                local dest="$module_backup_dir/${file}"
-                local dest_dir
-                dest_dir=$(dirname "$dest")
-                mkdir -p "$dest_dir"
                 if [[ -d "$src_path" ]]; then
                     rsync -a --delete "$src_path/" "$dest/"
                 else
