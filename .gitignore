@@ -18,3 +18,4 @@ backups/
 !/mnt/usbdata/dotfiles/backup-watcher.sh
 !/mnt/usbdata/dotfiles/README.md
 !/mnt/usbdata/dotfiles/modules/
+!/mnt/usbdata/dotfiles/.gitignore
