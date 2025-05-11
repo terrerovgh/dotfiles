@@ -1,136 +1,84 @@
-# 🍓 Raspberry Pi 5 Full Modular DevOps Stack - Proyecto Terrerov
+# 🍓 Raspberry Pi Modular DevOps Backup & Infra - Proyecto Terrerov
 
-Este proyecto transforma una Raspberry Pi 5 con Arch Linux ARM en un sistema DevOps modular, robusto y autosustentable, inspirado en OPNsense y servicios empresariales, enfocado en:
-
-- 🔐 Seguridad y control de red (Hotspot + Proxy + Firewall)
-- 🧱 Infraestructura Docker completa
-- 💾 Sistema de backups constante y modular
-- 📂 Almacenamiento eficiente y organizado en USB 3.0
-- ⚙️ Scripts reutilizables y automatización por defecto
-- 🌐 Despliegue en dominio personalizado `terrerov.com` usando certificados Cloudflare
-
-Todo esto es versionado con Git en un repositorio de `dotfiles`, para que puedas replicar, restaurar o migrar tu setup con solo ejecutar un script `setup.sh`.
+Este proyecto convierte una Raspberry Pi 5 (Arch Linux ARM) en una infraestructura DevOps modular, robusta y autosustentable, inspirada en OPNsense y servicios empresariales. Todo el sistema de configuración y automatización está versionado en este repositorio.
 
 ---
 
-## ✅ Checklist de Progreso
+## 🚀 ¿Qué contiene este repositorio?
 
-| Módulo                          | Estado       | Notas                                                                 |
-|--------------------------------|--------------|-----------------------------------------------------------------------|
-| 🔧 Sistema Base (`system`)     | ✅ Completo   | Hostname, login automático, usuario `terrerov` configurado.           |
-| 💽 Montaje USB (`usb-mount`)   | ✅ Completo   | Montaje automático + servicio que detecta desconexiones.             |
-| 🧠 Estructura Dotfiles          | ✅ Completo   | Estructura de carpetas modular organizada por servicios.             |
-| 📦 Backup Modular              | 🔄 En curso   | Scripts funcionales, falta pulir `README.md` y modularización final. |
-| 📶 Hotspot WiFi                | 🔲 Pendiente  | Configurar con `create_ap` + control por systemd.                     |
-| 🌐 Proxy Transparente (Squid)  | 🔲 Pendiente  | Proxy HTTP/HTTPS via Docker + redirección NAT.                        |
-| 🧱 Docker + Traefik            | 🔲 Pendiente  | Docker y proxy inverso para subdominios `*.terrerov.com`.            |
-| 🔒 Certificados Cloudflare     | 🔲 Pendiente  | Automatizar Let’s Encrypt con Cloudflare API.                        |
-| 🧩 Servicios Extra             | 🔲 Pendiente  | DNS (CoreDNS), Pi-hole, Monitorización (Uptime Kuma, Netdata, etc).  |
+- **Scripts de backup y restauración modular** (`backup.sh`)
+- **Definición de módulos**: cada servicio/configuración tiene su carpeta y `include.txt` con rutas críticas a respaldar
+- **Automatización de backups y sincronización con GitHub**
+- **Estructura lista para restaurar o migrar el sistema**
+- **No incluye los archivos respaldados** (por seguridad y privacidad, los backups se guardan fuera del repo, en `/mnt/usbdata/backups/dotfiles/`)
 
 ---
 
-## 🗂️ Estructura de Carpetas
+## 🗂️ Estructura del proyecto
 
-```bash
+```
 dotfiles/
-├── setup.sh                     # Script principal de instalación
-├── README.md                    # Este archivo
-├── modules/
-│   ├── system/                  # Configuración del sistema base
-│   ├── usb-mount/               # Montaje dinámico de USB y backups
-│   ├── docker/                  # Configuración base de Docker
-│   ├── proxy/                   # Squid, Traefik y reglas de red
-│   ├── backup/                  # Backup modular por servicio
-│   └── wifi-hotspot/           # Configuración y arranque de hotspot
-└── dotfiles-setup.log          # Registro de instalación
+├── backup.sh           # Script principal de backup modular y push a GitHub
+├── backup.log          # Log de respaldos
+├── README.md           # Este archivo
+├── modules/            # Definición de módulos y archivos a respaldar
+│   ├── system/
+│   │   └── include.txt
+│   ├── docker/
+│   │   └── include.txt
+│   ├── proxy/
+│   │   └── include.txt
+│   ├── usb-mount/
+│   │   └── include.txt
+│   ├── wifi-hotspot/
+│   │   └── include.txt
+│   └── backup/
+│       └── include.txt
+└── ...
 ```
 
----
-
-## 📁 Organización de `/mnt/usbdata`
-
-Esta partición se usa como almacenamiento principal del sistema. Estructura base recomendada:
-
-```
-/mnt/usbdata/
-├── backups/
-│   └── dotfiles/               # Copias por módulo (con README)
-├── media/
-│   ├── fotos/
-│   ├── videos/
-│   └── musica/
-├── documentos/
-│   ├── personales/
-│   └── laborales/
-├── configs/
-│   ├── pihole/
-│   ├── traefik/
-│   ├── squid/
-│   └── system/
-├── db/
-│   ├── postgres/
-│   └── sqlite/
-└── www/
-    └── sites/
-```
+Los backups reales se almacenan en `/mnt/usbdata/backups/dotfiles/<modulo>/` y **no** se suben a GitHub.
 
 ---
 
-## ⚙️ Cómo levantar el sistema desde cero
+## ♻️ Lógica de backup modular
 
-1. 🔥 Instalar Arch Linux ARM limpio en Raspberry Pi 5.
-2. 🔐 Crear el usuario `terrerov` y clonar el repositorio:
-   ```bash
-   git clone git@github.com:terrerovgh/dotfiles.git
-   cd dotfiles
-   ./setup.sh
-   ```
-3. El script detecta y monta el USB en `/mnt/usbdata`, configura el sistema, y ejecuta cada módulo en orden.
+- Cada módulo define en su `include.txt` los archivos/carpetas críticos a respaldar (rutas absolutas o relativas).
+- El script `backup.sh` recorre todos los módulos y copia los archivos a `/mnt/usbdata/backups/dotfiles/<modulo>/`, replicando la estructura original.
+- Se genera un `README.md` por módulo con la fecha y los archivos respaldados.
+- Si hay cambios en los scripts o definiciones, se hace commit y push automático a GitHub, con mensaje detallado por archivo.
+- El backup puede ejecutarse manualmente o por cron/systemd timer, y no requiere intervención ni contraseñas.
 
 ---
 
-## 🛠️ Sobre los Módulos
+## 🔒 Seguridad
 
-Cada módulo tiene:
-
-- Scripts de instalación y restauración
-- Backup de archivos de configuración
-- Un `README.md` explicando qué hace y qué necesita
-- Instalación automática si se ejecuta desde `setup.sh`
-
-Ejemplo de estructura:
-
-```
-modules/system/
-├── hostname.sh
-├── auto-login.sh
-└── README.md
-```
+- **No se suben archivos sensibles ni configuraciones reales a GitHub**.
+- Solo los scripts, logs y definiciones de backup están versionados.
+- El backup real queda en el almacenamiento local seguro (`/mnt/usbdata/backups/dotfiles/`).
+- El acceso SSH para push a GitHub es automatizado y sin passphrase.
 
 ---
 
-## ♻️ Backup Automático
+## ⚙️ Restauración
 
-- Cada módulo puede definirse en `backup/include.txt` con sus archivos críticos.
-- Un script `backup.sh` recorre los módulos y copia su contenido a `/mnt/usbdata/backups`.
-- Se configura un cronjob para ejecutarse cada X horas o al iniciar el sistema.
-
----
-
-## 🔒 Seguridad y recuperación
-
-- Si el USB no está montado, se usa una copia mínima del sistema desde SD.
-- Servicios como `usb-checker.service` monitorean que todo esté corriendo como debe.
+- Para restaurar, copia los archivos desde `/mnt/usbdata/backups/dotfiles/<modulo>/` a su ubicación original.
+- Puedes automatizar la restauración con un script similar, leyendo los `include.txt` de cada módulo.
+- El sistema es modular: puedes restaurar solo un servicio o todo el sistema.
 
 ---
 
-## 🔚 ¿Qué falta?
+## 🛠️ Automatización
 
-- Hotspot funcional con firewall
-- Redirección completa del tráfico al proxy transparente
-- Subdominios automatizados para cada contenedor
-- Certificados de Cloudflare configurados por API
-- Documentación por cada módulo individual
+- El backup se puede ejecutar manualmente:
+  ```bash
+  sudo bash /mnt/usbdata/dotfiles/backup.sh
+  ```
+- O programar con cron (ejemplo cada 6 horas):
+  ```bash
+  0 */6 * * * sudo /mnt/usbdata/dotfiles/backup.sh
+  ```
+- O con un systemd timer.
 
 ---
 
