@@ -6,8 +6,8 @@
 set -e
 
 # === CONFIGURACIÓN SSH PARA AUTOMATIZACIÓN ===
-# Usar la clave SSH de root para git push automatizado
-SSH_KEY="/root/.ssh/id_ed25519_nopass"
+# Usar la clave SSH del usuario terrerov para git push automatizado
+SSH_KEY="/home/terrerov/.ssh/id_ed25519_nopass"
 export GIT_SSH_COMMAND="ssh -i $SSH_KEY -o IdentitiesOnly=yes"
 
 # === ADVERTENCIA DE ROOT ===
@@ -89,7 +89,12 @@ if [[ -n "$changed_files" ]]; then
     for file in $changed_files; do
         git commit -m "Backup automático: $file - $(date '+%Y-%m-%d %H:%M:%S')" -- "$file" || true
     done
-    git push origin main
+    # Forzar push como usuario terrerov si el script se ejecuta como root
+    if [[ $EUID -eq 0 ]]; then
+        sudo -u terrerov GIT_SSH_COMMAND="$GIT_SSH_COMMAND" git push origin main
+    else
+        git push origin main
+    fi
     echo "Backup y sincronización con GitHub completados."
 else
     echo "No hay cambios para sincronizar con GitHub."
