@@ -5,6 +5,17 @@
 
 set -e
 
+# === CONFIGURACIÓN SSH PARA AUTOMATIZACIÓN ===
+# Cambia la ruta si tu clave SSH sin passphrase es diferente
+SSH_KEY="/home/terrerov/.ssh/id_ed25519_nopass"
+export GIT_SSH_COMMAND="ssh -i $SSH_KEY -o IdentitiesOnly=yes"
+
+# === ADVERTENCIA DE ROOT ===
+if [[ $EUID -ne 0 ]]; then
+  echo "[ERROR] Este script debe ejecutarse como root (sudo) para respaldar archivos protegidos."
+  exit 1
+fi
+
 # Configuración
 DOTFILES_DIR="/mnt/usbdata/dotfiles"
 MODULES_DIR="$DOTFILES_DIR/modules"
@@ -63,12 +74,9 @@ done
 
 # Commit y push a GitHub
 cd "$DOTFILES_DIR"
-# Soporte para SSH agent al usar sudo
-if [ -n "$SUDO_USER" ] && [ -n "$SSH_AUTH_SOCK" ]; then
-    export SSH_AUTH_SOCK="$SSH_AUTH_SOCK"
-fi
 git add .
-git commit -m "Backup automático: $(date '+%Y-%m-%d %H:%M:%S')"
+git commit -m "Backup automático: $(date '+%Y-%m-%d %H:%M:%S')" || true
+# El commit puede fallar si no hay cambios, por eso '|| true'
 git push origin main
 
 echo "Backup y sincronización con GitHub completados."
