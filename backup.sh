@@ -6,8 +6,8 @@
 set -e
 
 # === CONFIGURACIÓN SSH PARA AUTOMATIZACIÓN ===
-# Cambia la ruta si tu clave SSH sin passphrase es diferente
-SSH_KEY="/home/terrerov/.ssh/id_ed25519_nopass"
+# Usar la clave SSH de root para git push automatizado
+SSH_KEY="/root/.ssh/id_ed25519_nopass"
 export GIT_SSH_COMMAND="ssh -i $SSH_KEY -o IdentitiesOnly=yes"
 
 # === ADVERTENCIA DE ROOT ===
