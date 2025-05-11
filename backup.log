@@ -225,3 +225,57 @@
   - /etc/dnsmasq.conf -> /mnt/usbdata/backups/dotfiles/wifi-hotspot//etc/dnsmasq.conf
   - [WARN] /etc/network/interfaces no existe
   - /etc/iptables/ -> /mnt/usbdata/backups/dotfiles/wifi-hotspot//etc/iptables/
+  - /mnt/usbdata/dotfiles/backup.sh -> /mnt/usbdata/backups/dotfiles/backup//mnt/usbdata/dotfiles/backup.sh
+  - /mnt/usbdata/dotfiles/backup.log -> /mnt/usbdata/backups/dotfiles/backup//mnt/usbdata/dotfiles/backup.log
+  - /mnt/usbdata/dotfiles/modules/backup/ -> /mnt/usbdata/backups/dotfiles/backup//mnt/usbdata/dotfiles/modules/backup/
+  - [WARN] /etc/docker/daemon.json no existe
+  - [WARN] /etc/systemd/system/docker.service.d/ no existe
+  - /mnt/usbdata/config/docker/ -> /mnt/usbdata/backups/dotfiles/docker//mnt/usbdata/config/docker/
+  - [WARN] /mnt/usbdata/config/traefik/ no existe
+  - /mnt/usbdata/config/proxy/ -> /mnt/usbdata/backups/dotfiles/docker//mnt/usbdata/config/proxy/
+  - /mnt/usbdata/dev/docker-stacks/ -> /mnt/usbdata/backups/dotfiles/docker//mnt/usbdata/dev/docker-stacks/
+  - /mnt/usbdata/dotfiles/modules/docker/ -> /mnt/usbdata/backups/dotfiles/docker//mnt/usbdata/dotfiles/modules/docker/
+  - /mnt/usbdata/config/proxy/ -> /mnt/usbdata/backups/dotfiles/proxy//mnt/usbdata/config/proxy/
+  - [WARN] /mnt/usbdata/config/traefik/ no existe
+  - [WARN] /etc/traefik/ no existe
+  - [WARN] /etc/squid/ no existe
+  - /etc/hostname -> /mnt/usbdata/backups/dotfiles/system//etc/hostname
+  - /etc/hosts -> /mnt/usbdata/backups/dotfiles/system//etc/hosts
+  - /etc/fstab -> /mnt/usbdata/backups/dotfiles/system//etc/fstab
+  - /etc/passwd -> /mnt/usbdata/backups/dotfiles/system//etc/passwd
+  - /etc/group -> /mnt/usbdata/backups/dotfiles/system//etc/group
+  - /etc/shadow -> /mnt/usbdata/backups/dotfiles/system//etc/shadow
+  - /etc/sudoers -> /mnt/usbdata/backups/dotfiles/system//etc/sudoers
+  - /etc/sudoers.d/ -> /mnt/usbdata/backups/dotfiles/system//etc/sudoers.d/
+  - /etc/systemd/system/ -> /mnt/usbdata/backups/dotfiles/system//etc/systemd/system/
+  - [WARN] /etc/network/ no existe
+  - /etc/resolv.conf -> /mnt/usbdata/backups/dotfiles/system//etc/resolv.conf
+  - /etc/ssh/sshd_config -> /mnt/usbdata/backups/dotfiles/system//etc/ssh/sshd_config
+  - /etc/ssh/ -> /mnt/usbdata/backups/dotfiles/system//etc/ssh/
+  - /etc/profile -> /mnt/usbdata/backups/dotfiles/system//etc/profile
+  - /etc/bash.bashrc -> /mnt/usbdata/backups/dotfiles/system//etc/bash.bashrc
+  - /etc/environment -> /mnt/usbdata/backups/dotfiles/system//etc/environment
+  - /etc/locale.conf -> /mnt/usbdata/backups/dotfiles/system//etc/locale.conf
+  - /etc/vconsole.conf -> /mnt/usbdata/backups/dotfiles/system//etc/vconsole.conf
+  - [WARN] /etc/timezone no existe
+  - /etc/pacman.conf -> /mnt/usbdata/backups/dotfiles/system//etc/pacman.conf
+  - /etc/pacman.d/ -> /mnt/usbdata/backups/dotfiles/system//etc/pacman.d/
+  - /etc/modules-load.d/ -> /mnt/usbdata/backups/dotfiles/system//etc/modules-load.d/
+  - /etc/modprobe.d/ -> /mnt/usbdata/backups/dotfiles/system//etc/modprobe.d/
+  - [WARN] /etc/hosts.allow no existe
+  - [WARN] /etc/hosts.deny no existe
+  - /etc/crontab -> /mnt/usbdata/backups/dotfiles/system//etc/crontab
+  - /etc/cron.d/ -> /mnt/usbdata/backups/dotfiles/system//etc/cron.d/
+  - /etc/cron.daily/ -> /mnt/usbdata/backups/dotfiles/system//etc/cron.daily/
+  - /etc/cron.hourly/ -> /mnt/usbdata/backups/dotfiles/system//etc/cron.hourly/
+  - /etc/cron.monthly/ -> /mnt/usbdata/backups/dotfiles/system//etc/cron.monthly/
+  - /etc/cron.weekly/ -> /mnt/usbdata/backups/dotfiles/system//etc/cron.weekly/
+  - [WARN] /etc/logrotate.conf no existe
+  - [WARN] /etc/logrotate.d/ no existe
+  - [WARN] /etc/systemd/system/usb-mount.service no existe
+  - [WARN] /mnt/usbdata/config/system/ no existe
+  - /etc/hostapd/hostapd.conf -> /mnt/usbdata/backups/dotfiles/wifi-hotspot//etc/hostapd/hostapd.conf
+  - [WARN] /etc/default/hostapd no existe
+  - /etc/dnsmasq.conf -> /mnt/usbdata/backups/dotfiles/wifi-hotspot//etc/dnsmasq.conf
+  - [WARN] /etc/network/interfaces no existe
+  - /etc/iptables/ -> /mnt/usbdata/backups/dotfiles/wifi-hotspot//etc/iptables/
