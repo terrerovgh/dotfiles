@@ -78,11 +78,19 @@ for module in $(ls "$MODULES_DIR"); do
     backup_module "$module"
 done
 
-# Commit y push a GitHub
+# Commit y push a GitHub por cada archivo modificado
 cd "$DOTFILES_DIR"
-git add .
-git commit -m "Backup automático: $(date '+%Y-%m-%d %H:%M:%S')" || true
-# El commit puede fallar si no hay cambios, por eso '|| true'
-git push origin main
 
-echo "Backup y sincronización con GitHub completados."
+# Detectar archivos modificados (excluyendo README.md generados por backup)
+git add .
+changed_files=$(git diff --cached --name-only | grep -vE '/README.md$')
+
+if [[ -n "$changed_files" ]]; then
+    for file in $changed_files; do
+        git commit -m "Backup automático: $file - $(date '+%Y-%m-%d %H:%M:%S')" -- "$file" || true
+    done
+    git push origin main
+    echo "Backup y sincronización con GitHub completados."
+else
+    echo "No hay cambios para sincronizar con GitHub."
+fi
