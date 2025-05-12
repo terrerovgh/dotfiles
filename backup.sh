@@ -10,6 +10,20 @@ set -e
 SSH_KEY="/home/terrerov/.ssh/id_ed25519_nopass"
 export GIT_SSH_COMMAND="ssh -i $SSH_KEY -o IdentitiesOnly=yes"
 
+# === AUTENTICACIÓN GITHUB CON TOKEN ===
+GITHUB_ENV="/terrerov/.key/github.env"
+if [[ -f "$GITHUB_ENV" ]]; then
+  source "$GITHUB_ENV"
+  if [[ -n "$GITHUB_TOKEN" ]]; then
+    export GIT_ASKPASS="/bin/echo"
+    export GIT_TERMINAL_PROMPT=0
+    export GITHUB_USER="terrerovgh"
+    export GITHUB_REPO="dotfiles"
+    export GITHUB_URL="https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/${GITHUB_USER}/${GITHUB_REPO}.git"
+    git remote set-url origin "$GITHUB_URL"
+  fi
+fi
+
 # === ADVERTENCIA DE ROOT ===
 if [[ $EUID -ne 0 ]]; then
   echo "[ERROR] Este script debe ejecutarse como root (sudo) para respaldar archivos protegidos."
@@ -89,11 +103,10 @@ if [[ -n "$changed_files" ]]; then
     for file in $changed_files; do
         git commit -m "Backup automático: $file - $(date '+%Y-%m-%d %H:%M:%S')" -- "$file" || true
     done
-    # Forzar push como usuario terrerov si el script se ejecuta como root
-    if [[ $EUID -eq 0 ]]; then
-        sudo -u terrerov GIT_SSH_COMMAND="$GIT_SSH_COMMAND" git push origin main
-    else
-        git push origin main
+    git push origin main
+    # Restaurar la URL SSH si se cambió
+    if [[ -n "$GITHUB_TOKEN" ]]; then
+      git remote set-url origin "git@github.com:${GITHUB_USER}/${GITHUB_REPO}.git"
     fi
     echo "Backup y sincronización con GitHub completados."
 else
