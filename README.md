@@ -82,6 +82,24 @@ Los backups reales se almacenan en `/mnt/usbdata/backups/dotfiles/<modulo>/` y *
 
 ---
 
+## ✅ Checklist de Progreso
+
+| Módulo                          | Estado       | Notas                                                                 |
+|--------------------------------|--------------|-----------------------------------------------------------------------|
+| 🔧 Sistema Base (`system`)     | ✅ Completo   | Hostname, login automático, usuario `terrerov` configurado.           |
+| 💽 Montaje USB (`usb-mount`)   | ✅ Completo   | Montaje automático + servicio que detecta desconexiones.             |
+| 🧠 Estructura Dotfiles          | ✅ Completo   | Estructura de carpetas modular organizada por servicios.             |
+| 📦 Backup Modular              | ✅ Completo   | Backup modular, automatización y push a GitHub funcionando.          |
+| 📶 Hotspot WiFi                | ✅ Completo   | Configurado con `create_ap` + control por systemd.                     |
+| 🌐 Proxy Transparente (Squid)  | 🔲 Pendiente  | Proxy HTTP/HTTPS via Docker + redirección NAT.                        |
+| 🧱 Docker + Traefik            | 🔲 Pendiente  | Docker y proxy inverso para subdominios `*.terrerov.com`.            |
+| 🔒 Certificados Cloudflare     | 🔲 Pendiente  | Automatizar Let’s Encrypt con Cloudflare API.                        |
+| 🧩 Servicios Extra             | 🔲 Pendiente  | DNS (CoreDNS), Pi-hole, Monitorización (Uptime Kuma, Netdata, etc).  |
+| ♻️ Restauración Automática     | 🔄 En curso   | Script de restauración modular y pruebas de recuperación.             |
+| 🔔 Notificaciones/Alertas      | 🔲 Pendiente  | Integración con Telegram/email para alertas de backup.                |
+
+---
+
 ## 👤 Autor
 
 > **Josmar (terrerovgh)**  
